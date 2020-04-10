@@ -2,24 +2,27 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import App from "./components/App";
-import * as initialStateJson from "./initialState.json";
+import { App } from "./components/containers/AppContainer";
 import { storeFactory } from "./store";
+import { Provider } from "react-redux";
+import { initialState } from "./store/state";
 
-const initialState = localStorage["redux-store"]
+const appInitialState = localStorage["redux-store"]
   ? JSON.parse(localStorage["redux-store"])
-  : initialStateJson;
+  : initialState;
 
 const saveState = () =>
   (localStorage["redux-store"] = JSON.stringify(store.getState()));
 
-const store = storeFactory(initialState);
+const store = storeFactory(appInitialState);
 store.subscribe(saveState);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById("root")
 );
 

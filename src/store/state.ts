@@ -1,5 +1,10 @@
-import { gameCoalitions } from "../types/game";
+import { GameCoalitions, ScreenType, SETUP_SCREEN } from "../types/game";
 
-export interface CoalitionsGameState {
-  gameCoalitions: gameCoalitions;
+export interface CoalitionsGameGlobalState {
+  gameCoalitions?: GameCoalitions;
+  screen: ScreenType;
 }
+
+export const initialState: CoalitionsGameGlobalState = {
+  screen: SETUP_SCREEN,
+};
