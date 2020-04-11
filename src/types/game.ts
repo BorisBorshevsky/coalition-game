@@ -1,3 +1,4 @@
+// Defines the players.
 export enum Players {
   P1,
   P2,
