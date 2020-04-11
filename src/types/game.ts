@@ -1,5 +1,5 @@
 
-// Defines the enum of players.
+// Defines the enum of players. TODO
 export enum Player {
   P1,
   P2,
