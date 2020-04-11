@@ -28,7 +28,7 @@ export const GameCoalitionsZeroValue: GameCoalitions = {
 };
 
 // Defines the split based on the coalition and the value per player.
-export interface split {
+export interface Split {
   coalition: keyof GameCoalitions;
   P1?: number;
   P2?: number;
