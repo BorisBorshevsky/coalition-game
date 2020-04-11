@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/coalition-game/precache-manifest.9606983b0679d97bc75719ae7af2e4d4.js"
+  "/coalition-game/precache-manifest.6a77eec994f040d3cb46fc0930e51db5.js"
 );
 
 self.addEventListener('message', (event) => {

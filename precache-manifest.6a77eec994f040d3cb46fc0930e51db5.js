@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e6eace2b95f0360e5dfaf56320b347c4",
+    "revision": "3f30febd218ed73dfb52980fdda97d0c",
     "url": "/coalition-game/index.html"
   },
   {
-    "revision": "93a5cab65c47292bafd6",
+    "revision": "346d4ec88439608bb0ff",
     "url": "/coalition-game/static/css/main.f76200a9.chunk.css"
   },
   {
-    "revision": "70b73dae0689deb54ffa",
-    "url": "/coalition-game/static/js/2.f0119131.chunk.js"
+    "revision": "ac3db596b17684a472a5",
+    "url": "/coalition-game/static/js/2.c2bd7886.chunk.js"
   },
   {
     "revision": "0749163b59fbee32225059cb60c18af6",
-    "url": "/coalition-game/static/js/2.f0119131.chunk.js.LICENSE.txt"
+    "url": "/coalition-game/static/js/2.c2bd7886.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "93a5cab65c47292bafd6",
-    "url": "/coalition-game/static/js/main.88a5dfb3.chunk.js"
+    "revision": "346d4ec88439608bb0ff",
+    "url": "/coalition-game/static/js/main.4cf85d30.chunk.js"
   },
   {
     "revision": "dc6da7b642f1e7e04513",
