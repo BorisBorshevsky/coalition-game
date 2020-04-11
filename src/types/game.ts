@@ -1,4 +1,4 @@
-export enum Players {
+export enum Player {
   P1,
   P2,
   P3,
@@ -23,9 +23,10 @@ export const GameCoalitionsZeroValue: GameCoalitions = {
   value123: 0,
 };
 
-export interface split {
-  coalition: keyof GameCoalitions;
-  P1: number;
-  P2: number;
-  P3: number;
+export interface Split {
+  participants: Player[]
+  p1?: number;
+  p2?: number;
+  p3?: number;
 }
+

@@ -1,6 +1,12 @@
 import { combineReducers } from "redux";
 import { Actions, gameAction } from "./actions";
-import { GAME_SCREEN, GameCoalitions, GameCoalitionsZeroValue, ScreenType, SETUP_SCREEN, } from "../types/game";
+import {
+  GAME_SCREEN,
+  GameCoalitions,
+  GameCoalitionsZeroValue,
+  ScreenType,
+  SETUP_SCREEN,
+} from "../types/game";
 
 const gameCoalitions = (
   state: GameCoalitions = GameCoalitionsZeroValue,
