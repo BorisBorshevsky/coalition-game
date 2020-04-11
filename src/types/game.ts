@@ -1,4 +1,4 @@
-// Defines the players.
+// Defines the enum of players.
 export enum Players {
   P1,
   P2,
