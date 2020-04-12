@@ -33,12 +33,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const GameAppBar = () => {
+interface GameAppBarProps {
+  links?: { text: string; href: string }[];
+  startGameOnClick: () => void;
+}
+
+export const GameAppBar = (props: GameAppBarProps) => {
+  const { links, startGameOnClick } = props;
+
   const classes = useStyles();
 
   return (
     <AppBar
-      position="static"
+      position="sticky"
       color="default"
       elevation={0}
       className={classes.appBar}
@@ -53,36 +60,22 @@ export const GameAppBar = () => {
           The Coalition Parachute game
         </Typography>
         <nav>
-          <Link
-            variant="button"
-            color="textPrimary"
-            href="#"
-            className={classes.link}
-          >
-            Link1
-          </Link>
-          <Link
-            variant="button"
-            color="textPrimary"
-            href="#"
-            className={classes.link}
-          >
-            Link2
-          </Link>
-          <Link
-            variant="button"
-            color="textPrimary"
-            href="#"
-            className={classes.link}
-          >
-            Link3
-          </Link>
+          {links?.map((link) => (
+            <Link
+              variant="button"
+              color="textPrimary"
+              href={link.href}
+              className={classes.link}
+            >
+              {link.text}
+            </Link>
+          ))}
         </nav>
         <Button
-          href="#"
           color="primary"
           variant="outlined"
           className={classes.link}
+          onClick={startGameOnClick}
         >
           Start a new game
         </Button>

@@ -3,6 +3,7 @@ import { createStyles, TextField, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import { LabelledOutline } from "./LabledOutline";
+import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
 import Button from "@material-ui/core/Button";
 import {
   coalitionsForPlayer,
@@ -16,18 +17,25 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       "& > *": {
         margin: theme.spacing(1),
-        width: "12ch",
+        width: "185px",
       },
       "& > button": {
-        width: "20ch",
         marginLeft: "auto",
+        minWidth: "180px",
       },
-
     },
     offerOutline: {
       marginTop: "30px",
-      marginBottom: "30px"
-    }
+      marginBottom: "30px",
+    },
+    giveUp: {
+      display: "flex",
+      justifyContent: "flex-end",
+      margin: "0 20px",
+      "& > button": {
+        minWidth: "180px",
+      },
+    },
   })
 );
 
@@ -35,30 +43,50 @@ interface offerFormProps {
   className?: string;
   offerFrom: Player;
   onSubmit: (split: Split) => void;
+  onGiveUp: () => void;
 }
 
 export const OfferForm = (props: offerFormProps) => {
-  const { offerFrom, onSubmit } = props;
+  const { offerFrom, onSubmit, onGiveUp } = props;
   const coalitions = coalitionsForPlayer(offerFrom);
 
   return (
     <form noValidate autoComplete="off">
-      <SingleOffer
-        offerFrom={offerFrom}
-        onSubmit={onSubmit}
-        coalitionId={coalitions[0]}
-      />
-      <SingleOffer
-        offerFrom={offerFrom}
-        onSubmit={onSubmit}
-        coalitionId={coalitions[1]}
-      />
-      <SingleOffer
-        offerFrom={offerFrom}
-        onSubmit={onSubmit}
-        coalitionId={coalitions[2]}
-      />
+      <LabelledOutline label={"What do you want to do?"}>
+        <SingleOffer
+          offerFrom={offerFrom}
+          onSubmit={onSubmit}
+          coalitionId={coalitions[0]}
+        />
+        <SingleOffer
+          offerFrom={offerFrom}
+          onSubmit={onSubmit}
+          coalitionId={coalitions[1]}
+        />
+        <SingleOffer
+          offerFrom={offerFrom}
+          onSubmit={onSubmit}
+          coalitionId={coalitions[2]}
+        />
+        <GiveUp onClick={onGiveUp} />
+      </LabelledOutline>
     </form>
+  );
+};
+
+const GiveUp = ({ onClick }: { onClick: () => void }) => {
+  const classes = useStyles();
+  return (
+    <div className={classes.giveUp}>
+      <Button
+        variant={"contained"}
+        color={"secondary"}
+        onClick={onClick}
+        endIcon={<SentimentVeryDissatisfiedIcon />}
+      >
+        Can't give you a better offer!
+      </Button>
+    </div>
   );
 };
 
@@ -79,7 +107,12 @@ const SingleOffer = (props: singleOfferProps) => {
       : `${participantsWithoutSelf[0]} and ${participantsWithoutSelf[1]}`;
   const classes = useStyles();
 
-  const [input, setInput] = useState<Split>({ P1: 0, P2: 0, P3: 0, coalitionId: coalitionId });
+  const [input, setInput] = useState<Split>({
+    P1: 0,
+    P2: 0,
+    P3: 0,
+    coalitionId: coalitionId,
+  });
 
   const onChange = (player: Player) => (newValue: number) => {
     setInput((prevState) => {
@@ -110,7 +143,10 @@ const SingleOffer = (props: singleOfferProps) => {
   };
 
   return (
-    <LabelledOutline label={`Suggest an offer to ${offerToText}:`} className={classes.offerOutline}>
+    <LabelledOutline
+      label={`Suggest an offer to ${offerToText}:`}
+      className={classes.offerOutline}
+    >
       <div className={classes.singleOffer}>
         <OfferNumField
           player={Player.P1}
@@ -127,12 +163,7 @@ const SingleOffer = (props: singleOfferProps) => {
           participants={participants}
           onChange={onChange(Player.P3)}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          onClick={onButtonClick}
-        >
+        <Button variant="contained" size="small" onClick={onButtonClick}>
           Make an offer!
         </Button>
       </div>
@@ -148,10 +179,7 @@ interface OfferNumFieldProps {
 }
 
 const OfferNumField = (props: OfferNumFieldProps) => {
-  const {
-    participants, player, defaultValue = 0, onChange = () => {
-    }
-  } = props;
+  const { participants, player, defaultValue = 0, onChange = () => {} } = props;
   const enabled = participants.indexOf(player) !== -1;
   const labelText = `${getPlayerName(player)} will get:`;
 

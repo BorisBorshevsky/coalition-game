@@ -4,7 +4,7 @@ import { SetupScreen } from "../containers/SetupScreen";
 import { GameScreen } from "./GameScreen";
 import { GAME_SCREEN, ScreenType, SETUP_SCREEN } from "../../types/game";
 import { CssBaseline } from "@material-ui/core";
-import { GameAppBar } from "./GameBar";
+import { GameAppBar } from "../containers/GameAppBar";
 import { MadeWithLove } from "./MadeWithLove";
 
 interface AppProps {

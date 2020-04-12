@@ -7,6 +7,7 @@ import {
   ScreenType,
   SETUP_SCREEN,
 } from "../types/game";
+import modalReducer from "./modalReducer";
 
 const gameCoalitions = (
   state: GameCoalitions = GameCoalitionsZeroValue,
@@ -24,6 +25,8 @@ const screen = (screen: ScreenType = SETUP_SCREEN, action: gameAction) => {
   switch (action.type) {
     case Actions.START_GAME:
       return GAME_SCREEN;
+    case Actions.RESTART_GAME:
+      return SETUP_SCREEN;
     default:
       return screen;
   }
@@ -32,6 +35,7 @@ const screen = (screen: ScreenType = SETUP_SCREEN, action: gameAction) => {
 export const appReducer = combineReducers({
   gameCoalitions: gameCoalitions,
   screen: screen,
+  modal: modalReducer
 });
 
 export default appReducer;

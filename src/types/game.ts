@@ -55,10 +55,17 @@ export interface GameCoalitionsCombination {
   "123": [Player.P1, Player.P2, Player.P3];
 }
 
+export interface GameCoalitionsValues {
+  "12": number;
+  "13": number;
+  "23": number;
+  "123": number;
+}
+
 export type CoalitionId = keyof GameCoalitionsCombination;
 
 export interface Coalition {
   members: CoalitionsCombination;
 }
 
-export type Split = { [key in Player]: number } & { coalitionId?: CoalitionId };
+export type Split = { [key in Player]: number } & { coalitionId: CoalitionId };
