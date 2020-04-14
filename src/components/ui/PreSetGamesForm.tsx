@@ -2,7 +2,7 @@ import {Container, createStyles, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import {PlayerNamesForm} from "./PlayerNamesForm";
-import PreSetGamesButtonGroup from "./PreSetGamesButtonGroup";
+import PreSetGamesRadioButtonGroup from "./PreSetGameRadioButtonGroup";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -32,7 +32,7 @@ export const PreSetGamesForm = (props: preSetGamesFormProps) => {
 
   return (
   <Container maxWidth={"md"}>
-    <PreSetGamesButtonGroup/>
+    <PreSetGamesRadioButtonGroup/>
     <br/>
     <PlayerNamesForm/>
   </Container>
