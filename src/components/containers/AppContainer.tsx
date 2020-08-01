@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { CoalitionsGameGlobalState } from "../../store/state";
+import { StateShape } from "../../store/state";
 import { Dispatch } from "redux";
 import { gameAction } from "../../store/actions";
 import App from "../ui/App";
@@ -13,7 +13,7 @@ interface StateProps {
 
 interface OwnProps {}
 
-const mapStateToProps = (state: CoalitionsGameGlobalState): StateProps => {
+const mapStateToProps = (state: StateShape): StateProps => {
   return {
     screenType: state.screen,
   };
@@ -27,7 +27,7 @@ const AppContainer = connect<
   StateProps,
   DispatchProps,
   OwnProps,
-  CoalitionsGameGlobalState
+  StateShape
 >(
   mapStateToProps,
   mapDispatchToProps

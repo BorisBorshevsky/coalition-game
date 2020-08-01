@@ -1,15 +1,11 @@
-import { CoalitionId, Player, Split } from "../../types/game";
-import { createStyles, TextField, Theme } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import React, { useState } from "react";
-import { LabelledOutline } from "./LabledOutline";
+import {CoalitionId, GameCoalitionsValues, Player, Split} from "../../types/game";
+import {createStyles, TextField, Theme} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
+import React, {useMemo, useState} from "react";
+import {LabelledOutline} from "./LabledOutline";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
 import Button from "@material-ui/core/Button";
-import {
-  coalitionsForPlayer,
-  getParticipants,
-  getPlayerName,
-} from "../../types/helpers";
+import {getParticipants, getPlayerName,} from "../../types/helpers";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,39 +38,54 @@ const useStyles = makeStyles((theme: Theme) =>
 interface offerFormProps {
   className?: string;
   offerFrom: Player;
-  onSubmit: (split: Split) => void;
-  onGiveUp: () => void;
+  onSubmit: (offerFrom: Player, split: Split) => void;
+  onGiveUp: (offerFrom: Player) => void;
+  coalitionsValues: GameCoalitionsValues;
+  coalition: CoalitionId
+  back: () => void
 }
 
+
+
 export const OfferForm = (props: offerFormProps) => {
-  const { offerFrom, onSubmit, onGiveUp } = props;
-  const coalitions = coalitionsForPlayer(offerFrom);
+  const {offerFrom, onSubmit, onGiveUp, coalitionsValues, coalition, back} = props;
+
+  const giveUpHandler = () => {
+    onGiveUp(offerFrom)
+  }
 
   return (
     <form noValidate autoComplete="off">
-      <LabelledOutline label={"What do you want to do?"}>
+      <LabelledOutline label={`It is ${getPlayerName(offerFrom)}'s Turn to make an offer!`}>
         <SingleOffer
           offerFrom={offerFrom}
           onSubmit={onSubmit}
-          coalitionId={coalitions[0]}
+          coalitionId={coalition}
+          coalitionsValues={coalitionsValues}
         />
-        <SingleOffer
-          offerFrom={offerFrom}
-          onSubmit={onSubmit}
-          coalitionId={coalitions[1]}
-        />
-        <SingleOffer
-          offerFrom={offerFrom}
-          onSubmit={onSubmit}
-          coalitionId={coalitions[2]}
-        />
-        <GiveUp onClick={onGiveUp} />
+        <GiveUp onClick={giveUpHandler} />
+        <Back onClick={back}/>
+
       </LabelledOutline>
     </form>
   );
 };
 
-const GiveUp = ({ onClick }: { onClick: () => void }) => {
+const Back = ({onClick}: { onClick: () => void }) => {
+  return (
+    <div>
+      <Button
+        variant={"contained"}
+        color={"secondary"}
+        onClick={onClick}
+      >
+        Back
+      </Button>
+    </div>
+  );
+}
+
+const GiveUp = ({onClick}: { onClick: () => void }) => {
   const classes = useStyles();
   return (
     <div className={classes.giveUp}>
@@ -93,18 +104,15 @@ const GiveUp = ({ onClick }: { onClick: () => void }) => {
 interface singleOfferProps {
   coalitionId: CoalitionId;
   offerFrom: Player;
-  onSubmit: (split: Split) => void;
+  onSubmit: (offerFrom: Player, split: Split) => void;
+  coalitionsValues: GameCoalitionsValues;
 }
 
 const SingleOffer = (props: singleOfferProps) => {
-  const { offerFrom, onSubmit, coalitionId } = props;
+  const {offerFrom, onSubmit, coalitionId, coalitionsValues} = props;
   const participants = getParticipants(coalitionId);
-  const participantsWithoutSelf = participants.filter((p) => p !== offerFrom);
+  const offerToText = `Coalition with ${participants.map(getPlayerName).join(", ")}, Total value: ${coalitionsValues[coalitionId]}`
 
-  const offerToText =
-    participantsWithoutSelf.length <= 1
-      ? `${participantsWithoutSelf[0]}`
-      : `${participantsWithoutSelf[0]} and ${participantsWithoutSelf[1]}`;
   const classes = useStyles();
 
   const [input, setInput] = useState<Split>({
@@ -114,6 +122,10 @@ const SingleOffer = (props: singleOfferProps) => {
     coalitionId: coalitionId,
   });
 
+  const disabled = useMemo<boolean>(() => {
+    return input.P1 + input.P2 + input.P3 !== coalitionsValues[coalitionId]
+  }, [input, coalitionId, coalitionsValues]);
+
   const onChange = (player: Player) => (newValue: number) => {
     setInput((prevState) => {
       // We copy the prev state
@@ -121,16 +133,29 @@ const SingleOffer = (props: singleOfferProps) => {
         ...prevState,
       };
 
+      const fixValue = (value: number) => {
+
+        if (value < 0) {
+          return 0
+        }
+
+        if (value > coalitionsValues[coalitionId]) {
+          return coalitionsValues[coalitionId]
+        }
+
+        return value
+      }
+
       // This is ugly we need to put this mapping somewhere
       switch (player) {
         case Player.P1:
-          result.P1 = newValue;
+          result.P1 = fixValue(newValue) || 0;
           break;
         case Player.P2:
-          result.P2 = newValue;
+          result.P2 = fixValue(newValue) || 0;
           break;
         case Player.P3:
-          result.P3 = newValue;
+          result.P3 = fixValue(newValue) || 0;
           break;
       }
 
@@ -139,12 +164,13 @@ const SingleOffer = (props: singleOfferProps) => {
   };
 
   const onButtonClick = () => {
-    onSubmit(input);
+    onSubmit(offerFrom, input);
   };
+
 
   return (
     <LabelledOutline
-      label={`Suggest an offer to ${offerToText}:`}
+      label={offerToText}
       className={classes.offerOutline}
     >
       <div className={classes.singleOffer}>
@@ -152,18 +178,27 @@ const SingleOffer = (props: singleOfferProps) => {
           player={Player.P1}
           participants={participants}
           onChange={onChange(Player.P1)}
+          value={input.P1}
         />
         <OfferNumField
           player={Player.P2}
           participants={participants}
           onChange={onChange(Player.P2)}
+          value={input.P2}
         />
         <OfferNumField
           player={Player.P3}
           participants={participants}
           onChange={onChange(Player.P3)}
+          value={input.P3}
+
         />
-        <Button variant="contained" size="small" onClick={onButtonClick}>
+        <Button
+          variant="contained"
+          size="small"
+          disabled={disabled}
+          onClick={onButtonClick}
+        >
           Make an offer!
         </Button>
       </div>
@@ -175,11 +210,14 @@ interface OfferNumFieldProps {
   player: Player;
   participants: Array<Player>;
   defaultValue?: number;
-  onChange?: (newVal: number) => void;
+  onChange: (newVal: number) => void;
+  value: number
 }
 
 const OfferNumField = (props: OfferNumFieldProps) => {
-  const { participants, player, defaultValue = 0, onChange = () => {} } = props;
+  const {
+    participants, player, onChange, value
+  } = props;
   const enabled = participants.indexOf(player) !== -1;
   const labelText = `${getPlayerName(player)} will get:`;
 
@@ -190,7 +228,7 @@ const OfferNumField = (props: OfferNumFieldProps) => {
       InputLabelProps={{
         shrink: true,
       }}
-      defaultValue={defaultValue}
+      value={value}
       disabled={!enabled}
       onChange={(e) => onChange(parseInt(e.target.value))}
     />

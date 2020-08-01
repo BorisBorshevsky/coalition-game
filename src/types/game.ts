@@ -11,19 +11,19 @@ export const GAME_SCREEN = "GAME_SCREEN";
 // Defines screen types.
 export type ScreenType = typeof SETUP_SCREEN | typeof GAME_SCREEN;
 
-// Defines all possible coalitions.
-export interface GameCoalitions {
-  value12: number;
-  value23: number;
-  value13: number;
-  value123: number;
-}
+// // Defines all possible coalitions.
+// export interface GameCoalitions {
+//   value12: number;
+//   value23: number;
+//   value13: number;
+//   value123: number;
+// }
 
-export const GameCoalitionsZeroValue: GameCoalitions = {
-  value12: 0,
-  value13: 0,
-  value23: 0,
-  value123: 0,
+export const GameCoalitionsZeroValue: GameCoalitionsValues = {
+  "12": 0,
+  "13": 0,
+  "23": 0,
+  "123": 0,
 };
 
 export interface IPlayer {

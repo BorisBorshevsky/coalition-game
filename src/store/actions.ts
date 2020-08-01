@@ -1,17 +1,32 @@
-import { GameCoalitions } from "../types/game";
-import { Dispatch } from "redux";
+import {CoalitionId, GameCoalitionsValues, Player, Split} from "../types/game";
+
 
 export enum Actions {
   START_GAME = "START_GAME",
   RESTART_GAME = "RESTART_GAME",
-  SHOW_MODAL = "SHOW_MODAL",
-  HIDE_MODAL = "HIDE_MODAL",
+  SUBMIT_OFFER = "SUBMIT_OFFER",
+  GIVE_UP = "GIVE_UP",
+  SELECT_COALITION = "SELECT_COALITION",
+  BACK = "BACK",
 }
+
+interface selectCoalitionAction {
+  type: Actions.SELECT_COALITION,
+  payload: {
+    coalition: CoalitionId
+  }
+}
+
+interface backAction {
+  type: Actions.BACK,
+  payload: {}
+}
+
 
 interface startGameAction {
   type: Actions.START_GAME;
   payload: {
-    gameCoalitions: GameCoalitions;
+    gameCoalitionsValues: GameCoalitionsValues;
   };
 }
 
@@ -19,27 +34,38 @@ interface restartGameAction {
   type: Actions.RESTART_GAME;
 }
 
-interface showModalAction {
-  type: Actions.SHOW_MODAL;
-  modalType: modalType;
-  modalProps: any;
+
+interface giveUpAction {
+  type: Actions.GIVE_UP;
+  payload: {
+    offerFrom: Player;
+  };
 }
 
-interface hideModalAction {
-  type: Actions.HIDE_MODAL;
+
+interface submitOfferAction {
+  type: Actions.SUBMIT_OFFER;
+  payload: {
+    offer: {
+      split: Split;
+      offerFrom: Player;
+    }
+  };
 }
 
 export type gameAction =
   | startGameAction
   | restartGameAction
-  | showModalAction
-  | hideModalAction;
+  | submitOfferAction
+  | giveUpAction
+  | selectCoalitionAction
+  | backAction;
 
-export function startGame(gameCoalitions: GameCoalitions): startGameAction {
+export function startGame(gameCoalitions: GameCoalitionsValues): startGameAction {
   return {
     type: Actions.START_GAME,
     payload: {
-      gameCoalitions: gameCoalitions,
+      gameCoalitionsValues: gameCoalitions,
     },
   };
 }
@@ -50,26 +76,40 @@ export function restartGame(): restartGameAction {
   };
 }
 
-interface modalOptions {
-  modalProps: any;
-  modalType: modalType;
+export const submitOffer = (split: Split, offerFrom: Player): submitOfferAction => {
+  return {
+    type: Actions.SUBMIT_OFFER,
+    payload: {
+      offer: {
+        offerFrom,
+        split,
+      }
+    },
+  };
+};
+
+export const giveUp = (offerFrom: Player): giveUpAction => {
+  return {
+    type: Actions.GIVE_UP,
+    payload: {
+      offerFrom: offerFrom
+    }
+  }
 }
 
-export type modalType = string;
 
-export const showModal = (options: modalOptions) => (
-  dispatch: Dispatch<gameAction>
-) => {
-  const { modalProps, modalType } = options;
-  dispatch({
-    type: Actions.SHOW_MODAL,
-    modalProps: modalProps,
-    modalType: modalType,
-  });
-};
+export const selectCoalition = (c: CoalitionId): selectCoalitionAction => {
+  return {
+    type: Actions.SELECT_COALITION,
+    payload: {
+      coalition: c
+    }
+  }
+}
 
-export const hideModal = () => (dispatch: Dispatch<gameAction>) => {
-  dispatch({
-    type: Actions.HIDE_MODAL,
-  });
-};
+export const back = (): backAction => {
+  return {
+    type: Actions.BACK,
+    payload: {}
+  }
+}

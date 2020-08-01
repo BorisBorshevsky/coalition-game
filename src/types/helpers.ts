@@ -33,6 +33,6 @@ export const coalitionsForPlayer = (
   }
 };
 
-export const getParticipants = (coalitionId: CoalitionId) => {
+export const getParticipants = (coalitionId: CoalitionId):Array<Player> => {
   return CoalitionsCombinations[coalitionId];
 };

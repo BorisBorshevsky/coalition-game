@@ -1,18 +1,18 @@
 import React from "react";
 import "../../stylesheets/App.css";
-import { SetupScreen } from "../containers/SetupScreen";
-import { GameScreen } from "./GameScreen";
-import { GAME_SCREEN, ScreenType, SETUP_SCREEN } from "../../types/game";
-import { CssBaseline } from "@material-ui/core";
-import { GameAppBar } from "../containers/GameAppBar";
-import { MadeWithLove } from "./MadeWithLove";
+import {SetupScreen} from "../containers/SetupScreen";
+import {GameScreen} from "../containers/GameScreenContainer";
+import {GAME_SCREEN, ScreenType, SETUP_SCREEN} from "../../types/game";
+import {CssBaseline} from "@material-ui/core";
+import {GameAppBar} from "../containers/GameAppBar";
+import {MadeWithLove} from "./MadeWithLove";
 
 interface AppProps {
   screenType: ScreenType;
 }
 
 const App = (props: AppProps) => {
-  const { screenType } = props;
+  const {screenType} = props;
   return (
     <React.Fragment>
       <CssBaseline />

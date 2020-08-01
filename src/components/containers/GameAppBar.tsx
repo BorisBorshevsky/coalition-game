@@ -1,4 +1,4 @@
-import { CoalitionsGameGlobalState } from "../../store/state";
+import { StateShape } from "../../store/state";
 import { Dispatch } from "redux";
 import { gameAction, restartGame } from "../../store/actions";
 import { connect } from "react-redux";
@@ -14,7 +14,7 @@ interface StateProps {
 
 interface OwnProps {}
 
-const mapStateToProps = (state: CoalitionsGameGlobalState): StateProps => {
+const mapStateToProps = (state: StateShape): StateProps => {
   return {
     links: [],
   };
@@ -30,7 +30,7 @@ const GameAppBarContainer = connect<
   StateProps,
   DispatchProps,
   OwnProps,
-  CoalitionsGameGlobalState
+  StateShape
 >(
   mapStateToProps,
   mapDispatchToProps

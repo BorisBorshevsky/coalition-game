@@ -8,6 +8,7 @@ import { getPlayerName } from "../../types/helpers";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "480px",
+    minWidth: "480px",
     padding: "20px",
     backgroundImage: `url(${parachuteImg})`,
     backgroundSize: "cover",
