@@ -2,14 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import { App } from "./components/containers/AppContainer";
-import { storeFactory } from "./store";
-import { Provider } from "react-redux";
-import { initialState } from "./store/state";
+import {storeFactory} from "./store";
+import {Provider} from "react-redux";
+import {defaultState} from "./store/state";
+import {App} from "./containers/AppContainer";
 
 const appInitialState = localStorage["redux-store"]
   ? JSON.parse(localStorage["redux-store"])
-  : initialState;
+  : defaultState;
 
 const saveState = () =>
   (localStorage["redux-store"] = JSON.stringify(store.getState()));
@@ -19,9 +19,7 @@ store.subscribe(saveState);
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <App />
   </Provider>,
   document.getElementById("root")
 );

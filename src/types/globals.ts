@@ -1,8 +1,12 @@
-import {
-  GameCoalitionsCombination,
-  GameCoalitionsValues,
-  Player,
-} from "./game";
+import {Player,} from "./game";
+
+
+export interface GameCoalitionsCombination {
+  "12": Array<Player>;
+  "13": Array<Player>;
+  "23": Array<Player>;
+  "123": Array<Player>;
+}
 
 export const CoalitionsCombinations: GameCoalitionsCombination = {
   "12": [Player.P1, Player.P2],
@@ -11,15 +15,4 @@ export const CoalitionsCombinations: GameCoalitionsCombination = {
   "123": [Player.P1, Player.P2, Player.P3],
 };
 
-export const CoalitionsValues: GameCoalitionsValues = {
-  "12": 70,
-  "13": 60,
-  "23": 50,
-  "123": 100,
-};
 
-export const AllPlayers: [Player, Player, Player] = [
-  Player.P1,
-  Player.P2,
-  Player.P3,
-];

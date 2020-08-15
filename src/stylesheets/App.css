@@ -1,10 +1,222 @@
 .app {
-  min-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  min-width: 750px;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    min-width: 750px;
+    padding-top: 64px;
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+
+.root_topbar {
+    min-width: 750px;
+    position: fixed;
+    background-color: #bebebe;
+    display: flex;
+    width: 100%;
+    height: 51px;
+    justify-content: space-between;
+    border-bottom: solid 1px;
+    box-shadow: inset 0 0 2px #000000;
+}
+
+.root_topbar .root_topbar_button {
+    margin: 10px 19px;
+    width: 185px;
+    font-weight: 800;
+    border-radius: 26px;
+    height: 30px;
+}
+
+.root_topbar .root_topbar_title {
+    align-self: center;
+    margin-left: 50px;
+    font-weight: 800;
+}
+
+.intro_root {
+    width: 80%;
+    font-size: calc(2px + 2vmin);
+}
+
+.intro_root .intro_img {
+    width: 80%;
+}
+
+.coal_select_root {
+    margin-top: 50px;
+}
+
+.par_root {
+    width: 480px;
+    min-width: 480px;
+    padding: 20px;
+    background-image: url("parachute.jpeg");
+    background-size: cover;
+    margin: auto
+}
+
+.par_root > div > * {
+    border: 1px solid;
+    flex-basis: 15%;
+    text-align: center;
+    border-radius: 10px;
+    height: 50px;
+}
+
+.par_top {
+    display: flex;
+    justify-content: center;
+}
+
+.par_second {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.par_bottom {
+    display: flex;
+    justify-content: center;
+    margin-top: 175px;
+}
+
+.par_row_of_players {
+    margin-top: 25px;
+    color: green;
+    display: flex;
+    justify-content: space-between;
+}
+
+.coal_selections {
+    display: flex;
+}
+
+.single_coal_selection {
+    font-size: 20px;
+    max-width: 250px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
+
+.single_coal_selection > button {
+    width: 50%;
+    align-self: center;
+    height: 50px;
+    border-radius: 20px;
+    font-weight: 900;
+}
+
+.single_coal_selection > p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.offer_form {
+    font-size: 16px;
+}
+
+.offer_form > .offer_input > label {
+    min-width: 100px;
+    display: inline-block;
+
+}
+
+.offer_form > .offer_input > input {
+    width: 50px;
+    display: inline-block;
+}
+
+.offer_input {
+    height: 30px;
+}
+
+.ack_form {
+    font-size: 16px;
+    display: flex;
+}
+
+.single_ack {
+    margin: 20px;
+}
+
+.single_ack .question {
+}
+
+.single_ack .answer > span {
+    min-width: 120px;
+    display: inline-block;
+}
+
+.single_ack .answer > button {
+    min-width: 80px;
+}
+
+.single_ack .answer {
+    margin-bottom: 5px;
+}
+
+.reject {
+    background: lightpink;
+}
+
+.accept {
+    background: lightgray;
+}
+
+.aggr {
+    font-size: 18px;
+    background: lemonchiffon;
+    padding-left: 25px;
+}
+
+.aggr_split {
+    margin: 0 22px;
+
+}
+
+.value {
+    text-decoration: underline;
+}
+
+.give_up_root {
+    font-size: 20px;
+    max-width: 250px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
+
+.give_up_btn {
+    width: 50%;
+    align-self: center;
+    height: 50px;
+    border-radius: 20px;
+    font-weight: 900;
+    background: indianred;
+}
+
+.list_offers {
+    font-size: 16px;
+    list-style: decimal;
+
+}
+
+
+.list_offers > li > span {
+    border-left: solid 1px black;
+    border-right: solid 1px black;
+    display: inline-block;
+    padding: 5px;
+    width: 230px;
+
+
 }

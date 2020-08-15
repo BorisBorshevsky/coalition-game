@@ -1,48 +1,33 @@
-import {
-  CoalitionId,
-  GameCoalitionsValues,
-  GameCoalitionsZeroValue,
-  Player,
-  ScreenType,
-  SETUP_SCREEN,
-  Split,
-} from "../types/game";
+import {CoalitionId, defaultGameCoalitionsValues, GameCoalitionsValues, Offer, Player} from "../types/game";
+
+export type GameScreen = "INTRO" | "SELECT_COAL" | "OFFER" | "ACK" | "FINISHED"
+export type ChangeReason = "OFFER_REJECTED" | "OFFER_ACCEPTED"
 
 export interface StateShape {
-  gameCoalitions: GameCoalitionsValues;
-  screen: ScreenType;
-  gamePlay: GamePlayState;
+  // gameCoalitions: GameCoalitionsValues;
+  // screen: ScreenType;
+  // gamePlay: GamePlayState;
+  coalitionsValues: GameCoalitionsValues
+  screen: GameScreen
+  players: Array<Player>
+  currentTurn: Player
+  coalitionForOffer: CoalitionId
+  offers: Array<Offer>
+  reason: ChangeReason
+  states: Array<StateShape>
 }
 
-export interface GamePlayState {
-  currentTurn: Player;
-  gamePlayOfferState: GamePlayOfferState;
-  selectedCoalition: CoalitionId
-  allOffers: Offer[]
-}
-
-export interface Offer {
-  offerFrom: Player,
-  split: Split
-}
-
-
-
-export enum GamePlayOfferState {
-  SELECT_COALITION = "SELECT_COALITION",
-  SUGGEST_OFFER = "SUGGEST_OFFER",
-  ACCEPT_OFFER = "ACCEPT_OFFER",
-}
-
-export const initialGamePlayState: GamePlayState = {
-  allOffers: [],
-  selectedCoalition: "12",
+export const defaultState: StateShape = {
+  screen: "INTRO",
+  coalitionsValues: defaultGameCoalitionsValues,
+  players: [Player.P1, Player.P2, Player.P3],
   currentTurn: Player.P1,
-  gamePlayOfferState: GamePlayOfferState.SUGGEST_OFFER
-};
+  coalitionForOffer: "23",
+  offers: [],
+  reason: "OFFER_ACCEPTED",
+  states: []
 
-export const initialState: StateShape = {
-  gameCoalitions: GameCoalitionsZeroValue,
-  screen: SETUP_SCREEN,
-  gamePlay: initialGamePlayState,
+  // gameCoalitions: GameCoalitionsZeroValue,
+  // screen: SETUP_SCREEN,
+  // gamePlay: initialGamePlayState,
 };

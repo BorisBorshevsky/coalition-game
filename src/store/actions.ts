@@ -1,115 +1,146 @@
-import {CoalitionId, GameCoalitionsValues, Player, Split} from "../types/game";
-
+import {CoalitionId, GameCoalitionsValues, Offer, Player, respStatus, Split} from "../types/game";
 
 export enum Actions {
   START_GAME = "START_GAME",
+  CONFIGURE_GAME = "CONFIGURE_GAME",
   RESTART_GAME = "RESTART_GAME",
-  SUBMIT_OFFER = "SUBMIT_OFFER",
-  GIVE_UP = "GIVE_UP",
   SELECT_COALITION = "SELECT_COALITION",
+  SUBMIT_OFFER = "SUBMIT_OFFER",
+  RESPOND_OFFER = "RESPOND_OFFER",
+  UNDO = "UNDO",
+  // ACCEPT_OFFER = "ACCEPT_OFFER",
+  // REJECT_OFFER = "REJECT_OFFER",
   BACK = "BACK",
+  GIVE_UP = "GIVE_UP",
 }
 
-interface selectCoalitionAction {
-  type: Actions.SELECT_COALITION,
-  payload: {
-    coalition: CoalitionId
+export const giveUp = (): GiveUpAction => {
+  return {
+    type: Actions.GIVE_UP,
+    payload: {}
   }
 }
 
-interface backAction {
-  type: Actions.BACK,
-  payload: {}
+
+export const undo = (): UndoAction => {
+  return {
+    type: Actions.UNDO,
+    payload: {}
+  }
+}
+
+export const respondOffer = (actor: Player, status: respStatus): RespondOfferAction => {
+  return {
+    type: Actions.RESPOND_OFFER,
+    payload: {
+      actor: actor,
+      status: status
+    }
+  }
+}
+
+export const startGame = (gameValues: GameCoalitionsValues, offer: Offer): StartGameAction => {
+  return {
+    type: Actions.START_GAME,
+    payload: {
+      gameCoalitionsValues: gameValues,
+      offer: offer,
+    }
+  }
+}
+
+export const restartGame = (): RestartAction => {
+  return {
+    type: Actions.RESTART_GAME,
+    payload: {}
+  }
+}
+
+export const selectCoalition = (c: CoalitionId): SelectCoalitionAction => {
+  return {
+    type: Actions.SELECT_COALITION,
+    payload: {
+      selectedCoalition: c,
+    }
+  }
+}
+
+export const submitOffer = (split: Split, coalitionId: CoalitionId, offerFrom: Player): SubmitOfferAction => {
+  return {
+    type: Actions.SUBMIT_OFFER,
+    payload: {
+      actor: offerFrom,
+      selectedCoalition: coalitionId,
+      split: split
+    }
+  }
 }
 
 
-interface startGameAction {
+interface StartGameAction {
   type: Actions.START_GAME;
+  payload: {
+    gameCoalitionsValues: GameCoalitionsValues,
+    offer: Offer,
+  };
+}
+
+interface ConfigureAction {
+  type: Actions.CONFIGURE_GAME;
   payload: {
     gameCoalitionsValues: GameCoalitionsValues;
   };
 }
 
-interface restartGameAction {
+interface RestartAction {
   type: Actions.RESTART_GAME;
+  payload: {};
 }
 
-
-interface giveUpAction {
-  type: Actions.GIVE_UP;
+interface SelectCoalitionAction {
+  type: Actions.SELECT_COALITION;
   payload: {
-    offerFrom: Player;
+    selectedCoalition: CoalitionId,
   };
 }
 
-
-interface submitOfferAction {
+interface SubmitOfferAction {
   type: Actions.SUBMIT_OFFER;
   payload: {
-    offer: {
-      split: Split;
-      offerFrom: Player;
-    }
+    actor: Player,
+    selectedCoalition: CoalitionId
+    split: Split
   };
 }
 
-export type gameAction =
-  | startGameAction
-  | restartGameAction
-  | submitOfferAction
-  | giveUpAction
-  | selectCoalitionAction
-  | backAction;
+//
+interface UndoAction {
+  type: Actions.UNDO;
+  payload: {}
+}
 
-export function startGame(gameCoalitions: GameCoalitionsValues): startGameAction {
-  return {
-    type: Actions.START_GAME,
-    payload: {
-      gameCoalitionsValues: gameCoalitions,
-    },
+interface GiveUpAction {
+  type: Actions.GIVE_UP;
+  payload: {};
+}
+
+interface RespondOfferAction {
+  type: Actions.RESPOND_OFFER;
+  payload: {
+    actor: Player,
+    status: respStatus
   };
 }
 
-export function restartGame(): restartGameAction {
-  return {
-    type: Actions.RESTART_GAME,
-  };
-}
 
-export const submitOffer = (split: Split, offerFrom: Player): submitOfferAction => {
-  return {
-    type: Actions.SUBMIT_OFFER,
-    payload: {
-      offer: {
-        offerFrom,
-        split,
-      }
-    },
-  };
-};
+export type GameAction =
+  StartGameAction
+  | ConfigureAction
+  | SelectCoalitionAction
+  | RestartAction
+  | SubmitOfferAction
+  | RespondOfferAction
+  | UndoAction
+  | GiveUpAction
 
-export const giveUp = (offerFrom: Player): giveUpAction => {
-  return {
-    type: Actions.GIVE_UP,
-    payload: {
-      offerFrom: offerFrom
-    }
-  }
-}
-
-
-export const selectCoalition = (c: CoalitionId): selectCoalitionAction => {
-  return {
-    type: Actions.SELECT_COALITION,
-    payload: {
-      coalition: c
-    }
-  }
-}
-
-export const back = (): backAction => {
-  return {
-    type: Actions.BACK,
-    payload: {}
-  }
-}
+// | RejectOfferAction

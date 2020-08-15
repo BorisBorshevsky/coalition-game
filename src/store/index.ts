@@ -1,9 +1,8 @@
 import {applyMiddleware, createStore, Dispatch, Middleware, MiddlewareAPI,} from "redux";
-import thunk, {ThunkAction} from "redux-thunk";
-import appReducer, {defaultState} from "./reducers";
-import {StateShape} from "./state";
-import {gameAction} from "./actions";
+import thunk from "redux-thunk";
+import {defaultState} from "./state";
 import {composeWithDevTools} from "redux-devtools-extension";
+import {appReducer} from "./reducers";
 
 
 const logger = () => {
@@ -28,23 +27,10 @@ const logger = () => {
 
 
 export const storeFactory = (initialState = defaultState) => {
-
-  const composeEnhancers = composeWithDevTools({
-    // Specify name here, actionsBlacklist, actionsCreators and other options if needed
-  });
+  const composeEnhancers = composeWithDevTools({});
   return createStore(appReducer, initialState, composeEnhancers(
     applyMiddleware(thunk, logger()),
-    // other store enhancers if any
   ));
 
-
-  // return applyMiddleware(thunk, logger())(createStore)(
-  //   appReducer,
-  //   initialState
-  // );
 };
 
-export type ReduxThunk<ReturnType = void> = ThunkAction<ReturnType,
-  StateShape,
-  unknown,
-  gameAction>
