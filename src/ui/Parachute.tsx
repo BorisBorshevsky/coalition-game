@@ -1,5 +1,5 @@
-import React, {PropsWithChildren} from "react";
-import {GameCoalitionsValues, Player} from "../types/game";
+import React, { PropsWithChildren } from "react";
+import { GameCoalitionsValues, Player } from "../types/game";
 // import {GameCoalitionsValues, Player} from "../../types/game";
 // import {getPlayerName} from "../../types/helpers";
 
@@ -47,7 +47,7 @@ interface ParachuteProps {
 }
 
 export const Parachute = (props: ParachuteProps) => {
-  const {coalitionsValues, players} = props;
+  const { coalitionsValues, players } = props;
 
   return (
     <div className={"par_root"}>
@@ -71,11 +71,7 @@ export const Parachute = (props: ParachuteProps) => {
 };
 
 const ValueButton = (props: PropsWithChildren<{}>) => {
-  return (
-    <button className={"value_button"}>
-      {props.children}
-    </button>
-  )
+  return <button className={"value_button"}>{props.children}</button>;
   // return (
   //   <Button
   //     variant={"outlined"}
@@ -89,11 +85,7 @@ const ValueButton = (props: PropsWithChildren<{}>) => {
 };
 
 const PlayerButton = (props: PropsWithChildren<{}>) => {
-  return (
-    <button className={"player_button"}>
-      {props.children}
-    </button>
-  )
+  return <button className={"player_button"}>{props.children}</button>;
   // return (
   //   <Button
   //     size={"small"}

@@ -1,4 +1,11 @@
-import {CoalitionId, GameCoalitionsValues, Offer, Player, respStatus, Split} from "../types/game";
+import {
+  CoalitionId,
+  GameCoalitionsValues,
+  Offer,
+  Player,
+  respStatus,
+  Split,
+} from "../types/game";
 
 export enum Actions {
   START_GAME = "START_GAME",
@@ -17,71 +24,79 @@ export enum Actions {
 export const giveUp = (): GiveUpAction => {
   return {
     type: Actions.GIVE_UP,
-    payload: {}
-  }
-}
-
+    payload: {},
+  };
+};
 
 export const undo = (): UndoAction => {
   return {
     type: Actions.UNDO,
-    payload: {}
-  }
-}
+    payload: {},
+  };
+};
 
-export const respondOffer = (actor: Player, status: respStatus): RespondOfferAction => {
+export const respondOffer = (
+  actor: Player,
+  status: respStatus
+): RespondOfferAction => {
   return {
     type: Actions.RESPOND_OFFER,
     payload: {
       actor: actor,
-      status: status
-    }
-  }
-}
+      status: status,
+    },
+  };
+};
 
-export const startGame = (gameValues: GameCoalitionsValues, offer: Offer): StartGameAction => {
+export const startGame = (
+  gameValues: GameCoalitionsValues,
+  offer: Offer
+): StartGameAction => {
   return {
     type: Actions.START_GAME,
     payload: {
       gameCoalitionsValues: gameValues,
       offer: offer,
-    }
-  }
-}
+    },
+  };
+};
 
 export const restartGame = (): RestartAction => {
   return {
     type: Actions.RESTART_GAME,
-    payload: {}
-  }
-}
+    payload: {},
+  };
+};
 
 export const selectCoalition = (c: CoalitionId): SelectCoalitionAction => {
   return {
     type: Actions.SELECT_COALITION,
     payload: {
       selectedCoalition: c,
-    }
-  }
-}
+    },
+  };
+};
 
-export const submitOffer = (split: Split, coalitionId: CoalitionId, offerFrom: Player): SubmitOfferAction => {
+export const submitOffer = (
+  split: Split,
+  coalitionId: CoalitionId,
+  offerFrom: Player
+): SubmitOfferAction => {
   return {
     type: Actions.SUBMIT_OFFER,
     payload: {
       actor: offerFrom,
       selectedCoalition: coalitionId,
-      split: split
-    }
-  }
-}
-
+      split: split,
+    },
+  };
+};
 
 interface StartGameAction {
   type: Actions.START_GAME;
   payload: {
-    gameCoalitionsValues: GameCoalitionsValues,
-    offer: Offer,
+    gameCoalitionsValues: GameCoalitionsValues;
+    offer: Offer;
   };
 }
 
@@ -100,23 +115,23 @@ interface RestartAction {
 interface SelectCoalitionAction {
   type: Actions.SELECT_COALITION;
   payload: {
-    selectedCoalition: CoalitionId,
+    selectedCoalition: CoalitionId;
   };
 }
 
 interface SubmitOfferAction {
   type: Actions.SUBMIT_OFFER;
   payload: {
-    actor: Player,
-    selectedCoalition: CoalitionId
-    split: Split
+    actor: Player;
+    selectedCoalition: CoalitionId;
+    split: Split;
   };
 }
 
 //
 interface UndoAction {
   type: Actions.UNDO;
-  payload: {}
+  payload: {};
 }
 
 interface GiveUpAction {
@@ -127,20 +142,17 @@ interface GiveUpAction {
 interface RespondOfferAction {
   type: Actions.RESPOND_OFFER;
   payload: {
-    actor: Player,
-    status: respStatus
+    actor: Player;
+    status: respStatus;
   };
 }
 
-
 export type GameAction =
-  StartGameAction
+  | StartGameAction
   | ConfigureAction
   | SelectCoalitionAction
   | RestartAction
   | SubmitOfferAction
   | RespondOfferAction
   | UndoAction
-  | GiveUpAction
-
-// | RejectOfferAction
+  | GiveUpAction;

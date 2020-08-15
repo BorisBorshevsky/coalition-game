@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import {storeFactory} from "./store";
-import {Provider} from "react-redux";
-import {defaultState} from "./store/state";
-import {App} from "./containers/AppContainer";
+import { storeFactory } from "./store";
+import { Provider } from "react-redux";
+import { defaultState } from "./store/state";
+import { App } from "./containers/AppContainer";
 
 const appInitialState = localStorage["redux-store"]
   ? JSON.parse(localStorage["redux-store"])

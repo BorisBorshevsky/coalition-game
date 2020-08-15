@@ -1,12 +1,18 @@
-import {defaultState, GameScreen, StateShape} from "./state";
-import {Actions, GameAction} from "./actions";
-import {getMissingPlayer, getParticipants, isOfferAccepted, isOfferFinished, isOfferRejected} from "../types/helpers";
-import {Offer} from "../types/game";
+import { defaultState, GameScreen, StateShape } from "./state";
+import { Actions, GameAction } from "./actions";
+import {
+  getMissingPlayer,
+  getParticipants,
+  isOfferAccepted,
+  isOfferFinished,
+  isOfferRejected,
+} from "../types/helpers";
+import { Offer } from "../types/game";
 
-
-export const appReducer = (state: StateShape = defaultState,
-                           action: GameAction): StateShape => {
-
+export const appReducer = (
+  state: StateShape = defaultState,
+  action: GameAction
+): StateShape => {
   switch (action.type) {
     case Actions.START_GAME:
       return {
@@ -14,57 +20,55 @@ export const appReducer = (state: StateShape = defaultState,
         screen: "SELECT_COAL",
         coalitionsValues: action.payload.gameCoalitionsValues,
         offers: [action.payload.offer],
-        states: [...state.states, cleanState(state)]
-      }
+        states: [...state.states, cleanState(state)],
+      };
     case Actions.RESTART_GAME:
-      return {...state, screen: "INTRO"}
+      return { ...state, screen: "INTRO" };
     case Actions.SELECT_COALITION:
       return {
         ...state,
         screen: "OFFER",
         coalitionForOffer: action.payload.selectedCoalition,
-        states: [...state.states, cleanState(state)]
-      }
+        states: [...state.states, cleanState(state)],
+      };
     case Actions.SUBMIT_OFFER:
-      const {actor, selectedCoalition, split} = action.payload
-      const users = getParticipants(selectedCoalition)
+      const { actor, selectedCoalition, split } = action.payload;
+      const users = getParticipants(selectedCoalition);
       const offer: Offer = {
-        actor, selectedCoalition, split,
+        actor,
+        selectedCoalition,
+        split,
         P1: "NON_RELEVANT",
         P2: "NON_RELEVANT",
-        P3: "NON_RELEVANT"
-      }
-      users.forEach(u => offer[u] = "TBD")
-      offer[actor] = "PROPOSED"
+        P3: "NON_RELEVANT",
+      };
+      users.forEach((u) => (offer[u] = "TBD"));
+      offer[actor] = "PROPOSED";
 
       return {
         ...state,
         screen: "ACK",
-        offers: [
-          ...state.offers,
-          offer
-        ],
-        states: [...state.states, cleanState(state)]
-      }
+        offers: [...state.offers, offer],
+        states: [...state.states, cleanState(state)],
+      };
     case Actions.RESPOND_OFFER:
-      const {actor: resOfferActor, status} = action.payload
-      const lastOffer = {...state.offers.pop()!}
+      const { actor: resOfferActor, status } = action.payload;
+      const lastOffer = { ...state.offers.pop()! };
 
       if (status === "ACCEPT") {
-        lastOffer[resOfferActor] = "ACCEPTED"
+        lastOffer[resOfferActor] = "ACCEPTED";
       }
 
       if (status === "REJECT") {
-        lastOffer[resOfferActor] = "REJECTED"
+        lastOffer[resOfferActor] = "REJECTED";
       }
-
 
       if (!isOfferFinished(lastOffer)) {
         return {
           ...state,
           offers: [...state.offers, lastOffer],
-          states: [...state.states, cleanState(state)]
-        }
+          states: [...state.states, cleanState(state)],
+        };
       }
 
       //offer finished
@@ -74,15 +78,15 @@ export const appReducer = (state: StateShape = defaultState,
           offers: [...state.offers, lastOffer],
           reason: "OFFER_REJECTED",
           screen: "SELECT_COAL",
-          states: [...state.states, cleanState(state)]
-        }
+          states: [...state.states, cleanState(state)],
+        };
       }
 
       if (isOfferAccepted(lastOffer)) {
-        let screen: GameScreen = "SELECT_COAL"
+        let screen: GameScreen = "SELECT_COAL";
 
         if (lastOffer.selectedCoalition === "123") {
-          screen = "FINISHED"
+          screen = "FINISHED";
         }
 
         return {
@@ -91,51 +95,40 @@ export const appReducer = (state: StateShape = defaultState,
           reason: "OFFER_ACCEPTED",
           screen: screen,
           currentTurn: getMissingPlayer(lastOffer.selectedCoalition),
-          states: [...state.states, cleanState(state)]
-        }
+          states: [...state.states, cleanState(state)],
+        };
       }
 
-      throw "Should not happen"
+      throw "Should not happen";
 
     case Actions.UNDO:
       if (state.states) {
-        const lastState = state.states[state.states.length - 1]
+        const lastState = state.states[state.states.length - 1];
 
         return {
           ...lastState,
-          states: state.states.slice(0, -1)
-        }
+          states: state.states.slice(0, -1),
+        };
       }
 
-      return {...state}
+      return { ...state };
 
     case Actions.GIVE_UP:
       return {
         ...state,
         states: [...state.states, cleanState(state)],
-        screen: "FINISHED"
-      }
+        screen: "FINISHED",
+      };
 
     default:
       return {
-        ...state
-      }
+        ...state,
+      };
   }
-}
+};
 
 const cleanState = (s: StateShape): StateShape => {
-  const res = {...s}
-  res.states = []
-  return res
-}
-
-
-// export interface Offer {
-//   actor: Player,
-//   selectedCoalition: CoalitionId,
-//   split: Split,
-//   [Player.P1]: AckStatus,
-//   [Player.P2]: AckStatus,
-//   [Player.P3]: AckStatus
-// }
-
+  const res = { ...s };
+  res.states = [];
+  return res;
+};

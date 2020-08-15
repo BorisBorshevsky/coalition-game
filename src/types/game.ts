@@ -4,7 +4,7 @@ export enum Player {
   P3 = "P3",
 }
 
-export const allPlayers = [Player.P1, Player.P2, Player.P3]
+export const allPlayers = [Player.P1, Player.P2, Player.P3];
 
 export interface GameCoalitionsValues {
   "12": number;
@@ -20,26 +20,27 @@ export const defaultGameCoalitionsValues: GameCoalitionsValues = {
   "123": 0,
 };
 
-
 export type CoalitionId = keyof GameCoalitionsValues;
 
 export type Split = { [key in Player]: number };
 
-export type AckStatus = "PROPOSED" | "ACCEPTED" | "REJECTED" | "NON_RELEVANT" | "TBD"
+export type AckStatus =
+  | "PROPOSED"
+  | "ACCEPTED"
+  | "REJECTED"
+  | "NON_RELEVANT"
+  | "TBD";
 
-
-export type respStatus = "ACCEPT" | "REJECT"
-
+export type respStatus = "ACCEPT" | "REJECT";
 
 export interface Offer {
-  actor: Player,
-  selectedCoalition: CoalitionId,
-  split: Split,
-  [Player.P1]: AckStatus,
-  [Player.P2]: AckStatus,
-  [Player.P3]: AckStatus
+  actor: Player;
+  selectedCoalition: CoalitionId;
+  split: Split;
+  [Player.P1]: AckStatus;
+  [Player.P2]: AckStatus;
+  [Player.P3]: AckStatus;
 }
-
 
 // // Defines the enum of players. TODO
 // export enum Player {

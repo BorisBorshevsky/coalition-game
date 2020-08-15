@@ -1,5 +1,4 @@
-import {Player,} from "./game";
-
+import { Player } from "./game";
 
 export interface GameCoalitionsCombination {
   "12": Array<Player>;
@@ -14,5 +13,3 @@ export const CoalitionsCombinations: GameCoalitionsCombination = {
   "23": [Player.P2, Player.P3],
   "123": [Player.P1, Player.P2, Player.P3],
 };
-
-
