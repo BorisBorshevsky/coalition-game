@@ -28,6 +28,7 @@ export const OfferForm = (props: props) => {
     coalitionsValues,
     onOfferSubmit,
     currentTurn,
+    offers,
   } = props;
   const [input, setInput] = useState<Split>({
     P1: 0,
@@ -56,6 +57,22 @@ export const OfferForm = (props: props) => {
     setInput(res);
   };
 
+  const offerAlreadyExists = () => {
+    const found = offers.find((o: Offer) => {
+      if (
+        input.P1 == o.split.P1 &&
+        input.P2 == o.split.P2 &&
+        input.P3 == o.split.P3 &&
+        o[currentTurn] === "PROPOSED" &&
+        o.selectedCoalition === coalitionForOffer
+      ) {
+        return true;
+      }
+    });
+
+    return !!found;
+  };
+
   return (
     <div className={"offer_form_root"}>
       <Parachute {...props} />
@@ -78,9 +95,10 @@ export const OfferForm = (props: props) => {
           value="Submit"
           disabled={
             input.P1 + input.P2 + input.P3 !==
-            coalitionsValues[coalitionForOffer]
+              coalitionsValues[coalitionForOffer] || offerAlreadyExists()
           }
         />
+        {offerAlreadyExists() && <p>This offer was already rejected</p>}
       </form>
     </div>
   );
