@@ -46,18 +46,24 @@ export const OfferForm = (props: props) => {
 
   const onChangeHandler = (p: Player) => (value: number) => {
     const res = { ...input };
-    res[p] = value >= 0 ? value : 0;
+    res[p] =
+      value >= 0
+        ? value > coalitionsValues[coalitionForOffer]
+          ? coalitionsValues[coalitionForOffer]
+          : value
+        : 0;
 
     setInput(res);
   };
 
   return (
-    <div className={"offer_fo./src/containers/AppContainer.tsxrm_root"}>
+    <div className={"offer_form_root"}>
       <Parachute {...props} />
       <form className={"offer_form"} onSubmit={handleSubmit}>
         {players.map((p) => {
           return (
             <PlayerInput
+              maxForCoalition={coalitionsValues[coalitionForOffer]}
               value={input[p]}
               player={p}
               onChange={onChangeHandler(p)}
@@ -83,18 +89,25 @@ export const OfferForm = (props: props) => {
 interface inputPros {
   player: Player;
   value: number;
+  maxForCoalition: number;
   onChange: (value: number) => void;
 }
 
 const PlayerInput = (props: inputPros) => {
-  const { player, value, onChange } = props;
+  const { player, value, onChange, maxForCoalition } = props;
+
   return (
     <div className={"offer_input"}>
       <label>{player} will get:</label>
+
       <input
+        value={value ? value : ""}
+        min={0}
+        max={maxForCoalition}
         type="number"
-        value={value}
-        onChange={(e) => onChange(parseInt(e.target.value) || 0)}
+        onChange={(e) => {
+          onChange(parseInt(e.target.value || "0"));
+        }}
       />
     </div>
   );
