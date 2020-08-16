@@ -6,7 +6,13 @@ import {
   Player,
 } from "../types/game";
 
-export type GameScreen = "INTRO" | "SELECT_COAL" | "OFFER" | "ACK" | "FINISHED";
+export type GameScreen =
+  | "SETUP"
+  | "INTRO"
+  | "SELECT_COAL"
+  | "OFFER"
+  | "ACK"
+  | "FINISHED";
 export type ChangeReason = "OFFER_REJECTED" | "OFFER_ACCEPTED";
 
 export interface StateShape {

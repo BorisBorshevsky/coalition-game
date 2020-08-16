@@ -1,62 +1,48 @@
-import React, { PropsWithChildren } from "react";
-import { GameCoalitionsValues, Player } from "../types/game";
-// import {GameCoalitionsValues, Player} from "../../types/game";
-// import {getPlayerName} from "../../types/helpers";
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     width: "480px",
-//     minWidth: "480px",
-//     padding: "20px",
-//     backgroundImage: `url(${parachuteImg})`,
-//     backgroundSize: "cover",
-//     margin: "auto",
-//     "& > div > *": {
-//       border: "1px solid",
-//       flexBasis: "15%",
-//       textAlign: "center",
-//       borderRadius: "10px",
-//     },
-//   },
-//   top: {
-//     display: "flex",
-//     justifyContent: "center",
-//   },
-//   second: {
-//     marginTop: "25px",
-//     display: "flex",
-//     alignItems: "center",
-//     justifyContent: "space-around",
-//   },
-//   bottom: {
-//     display: "flex",
-//     justifyContent: "center",
-//     marginTop: "175px",
-//   },
-//   rowOfPlayers: {
-//     marginTop: "25px",
-//     color: "green",
-//     display: "flex",
-//     justifyContent: "space-between",
-//   },
-// }));
+import React, { PropsWithChildren, useState } from "react";
+import { CoalitionId, GameCoalitionsValues, Player } from "../types/game";
 
 interface ParachuteProps {
   coalitionsValues: GameCoalitionsValues;
   players: Player[];
+  editable?: boolean;
+  onUpdateCoalition?: (c: GameCoalitionsValues) => void;
 }
 
 export const Parachute = (props: ParachuteProps) => {
-  const { coalitionsValues, players } = props;
+  const { coalitionsValues, players, editable } = props;
+
+  const [input, setInput] = useState<GameCoalitionsValues>({
+    ...coalitionsValues,
+  });
+
+  const handleUpdateVal = (c: CoalitionId) => {
+    return (value: number) => {
+      const newInput = { ...input, [c]: value };
+      setInput(newInput);
+      props.onUpdateCoalition && props.onUpdateCoalition(newInput);
+    };
+  };
 
   return (
     <div className={"par_root"}>
       <div className={"par_top"}>
-        <ValueButton>{coalitionsValues["13"]}</ValueButton>
+        <ValueButton
+          disabled={!editable}
+          value={coalitionsValues["13"]}
+          onUpdate={handleUpdateVal("13")}
+        />
       </div>
       <div className={"par_second"}>
-        <ValueButton>{coalitionsValues["12"]}</ValueButton>
-        <ValueButton>{coalitionsValues["23"]}</ValueButton>
+        <ValueButton
+          disabled={!editable}
+          value={coalitionsValues["12"]}
+          onUpdate={handleUpdateVal("12")}
+        />
+        <ValueButton
+          disabled={!editable}
+          value={coalitionsValues["23"]}
+          onUpdate={handleUpdateVal("23")}
+        />
       </div>
       <div className={"par_row_of_players"}>
         <PlayerButton>{players[0]}</PlayerButton>
@@ -64,36 +50,36 @@ export const Parachute = (props: ParachuteProps) => {
         <PlayerButton>{players[2]}</PlayerButton>
       </div>
       <div className={"par_bottom"}>
-        <ValueButton>{coalitionsValues["123"]}</ValueButton>
+        <ValueButton
+          disabled={!editable}
+          value={coalitionsValues["123"]}
+          onUpdate={handleUpdateVal("123")}
+        />
       </div>
     </div>
   );
 };
 
-const ValueButton = (props: PropsWithChildren<{}>) => {
-  return <button className={"value_button"}>{props.children}</button>;
-  // return (
-  //   <Button
-  //     variant={"outlined"}
-  //     size={"small"}
-  //     disableRipple={true}
-  //     style={{cursor: "default"}}
-  //   >
-  //     {props.children}
-  //   </Button>
-  // );
+interface valueButtonProps {
+  disabled?: boolean;
+  value: number;
+  onUpdate: (n: number) => void;
+}
+
+const ValueButton = (props: valueButtonProps) => {
+  return (
+    <input
+      type="number"
+      disabled={!!props.disabled}
+      className={"value_button"}
+      defaultValue={props.value}
+      onChange={(e) => {
+        return props.onUpdate(parseInt(e.target.value));
+      }}
+    />
+  );
 };
 
 const PlayerButton = (props: PropsWithChildren<{}>) => {
   return <button className={"player_button"}>{props.children}</button>;
-  // return (
-  //   <Button
-  //     size={"small"}
-  //     variant={"contained"}
-  //     disableRipple={true}
-  //     style={{cursor: "default"}}
-  //   >
-  //     {props.children}
-  //   </Button>
-  // );
 };

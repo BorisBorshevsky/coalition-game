@@ -6,7 +6,7 @@ import {
   Split,
 } from "../types/game";
 import React, { ChangeEvent, FormEventHandler, useState } from "react";
-import { getParticipants, latestAcceptedOffer } from "../types/helpers";
+import { getParticipants } from "../types/helpers";
 import { Parachute } from "./Parachute";
 
 interface props {
@@ -28,7 +28,6 @@ export const OfferForm = (props: props) => {
     coalitionsValues,
     onOfferSubmit,
     currentTurn,
-    offers,
   } = props;
   const [input, setInput] = useState<Split>({
     P1: 0,
@@ -53,7 +52,7 @@ export const OfferForm = (props: props) => {
   };
 
   return (
-    <div className={"offer_form_root"}>
+    <div className={"offer_fo./src/containers/AppContainer.tsxrm_root"}>
       <Parachute {...props} />
       <form className={"offer_form"} onSubmit={handleSubmit}>
         {players.map((p) => {

@@ -7,9 +7,11 @@ import {
   respondOffer,
   restartGame,
   selectCoalition,
+  setup,
   startGame,
   submitOffer,
   undo,
+  updateCoalitions,
 } from "../store/actions";
 import { App } from "../ui/App";
 import {
@@ -20,13 +22,6 @@ import {
   respStatus,
   Split,
 } from "../types/game";
-
-const defaultGame: GameCoalitionsValues = {
-  "12": 70,
-  "13": 60,
-  "23": 50,
-  "123": 100,
-};
 
 const defaultOffer: Offer = {
   P1: "NON_RELEVANT",
@@ -53,6 +48,8 @@ interface DispatchProps {
   onOfferRespond: (p: Player, response: respStatus) => void;
   onUndo: () => void;
   onGiveUp: () => void;
+  onSetupClick: () => void;
+  onUpdateCoalition: (c: GameCoalitionsValues) => void;
 }
 
 interface StateProps {
@@ -84,7 +81,7 @@ const mapDispatchToProps = (dispatch: Dispatch<GameAction>): DispatchProps => {
     onUndo: () => dispatch(undo()),
     onCoalitionSelect: (c: CoalitionId) => dispatch(selectCoalition(c)),
     onGameRestart: () => dispatch(restartGame()),
-    onGameStart: () => dispatch(startGame(defaultGame, defaultOffer)),
+    onGameStart: () => dispatch(startGame(defaultOffer)),
     onOfferSubmit: (
       split: Split,
       coalitionId: CoalitionId,
@@ -93,6 +90,8 @@ const mapDispatchToProps = (dispatch: Dispatch<GameAction>): DispatchProps => {
     onOfferRespond: (p: Player, response: respStatus) =>
       dispatch(respondOffer(p, response)),
     onGiveUp: () => dispatch(giveUp()),
+    onSetupClick: () => dispatch(setup()),
+    onUpdateCoalition: (c) => dispatch(updateCoalitions(c)),
   };
 };
 

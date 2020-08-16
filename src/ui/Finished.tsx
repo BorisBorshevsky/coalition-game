@@ -2,36 +2,6 @@ import React from "react";
 import { allPlayers, Offer, Player } from "../types/game";
 import { latestAcceptedOffer } from "../types/helpers";
 
-const getSuggestedBy = (o: Offer) => {
-  if (o[Player.P1] == "PROPOSED") {
-    return Player.P1;
-  }
-
-  if (o[Player.P2] == "PROPOSED") {
-    return Player.P2;
-  }
-
-  if (o[Player.P3] == "PROPOSED") {
-    return Player.P3;
-  }
-
-  return "Initial";
-};
-
-const getRejectedBy = (o: Offer) => {
-  if (o[Player.P1] == "REJECTED") {
-    return Player.P1;
-  }
-
-  if (o[Player.P2] == "REJECTED") {
-    return Player.P2;
-  }
-
-  if (o[Player.P3] == "REJECTED") {
-    return Player.P3;
-  }
-};
-
 interface singleOfferProps {
   offer: Offer;
 }
@@ -40,9 +10,10 @@ export const SingleOffer = (props: singleOfferProps) => {
   const { offer: o } = props;
   return (
     <li>
-      <span>{`suggested by: ${getSuggestedBy(o)}`}</span>
       <span>{`Values: P1: ${o.split.P1}, P2: ${o.split.P2}, P3: ${o.split.P3}`}</span>
-      <span>{`Rejected by: ${getRejectedBy(o)}`}</span>
+      <span>{`P1: ${o[Player.P1]}`}</span>
+      <span>{`P2: ${o[Player.P2]}`}</span>
+      <span>{`P3: ${o[Player.P3]}`}</span>
     </li>
   );
 };

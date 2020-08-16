@@ -7,7 +7,7 @@ import {
   isOfferFinished,
   isOfferRejected,
 } from "../types/helpers";
-import { Offer } from "../types/game";
+import { Offer, Player } from "../types/game";
 
 export const appReducer = (
   state: StateShape = defaultState,
@@ -18,8 +18,8 @@ export const appReducer = (
       return {
         ...state,
         screen: "SELECT_COAL",
-        coalitionsValues: action.payload.gameCoalitionsValues,
-        offers: [action.payload.offer],
+        coalitionsValues: { ...state.coalitionsValues },
+        offers: [buildDefaultOffer(state)],
         states: [...state.states, cleanState(state)],
       };
     case Actions.RESTART_GAME:
@@ -120,6 +120,18 @@ export const appReducer = (
         screen: "FINISHED",
       };
 
+    case Actions.SETUP:
+      return {
+        ...state,
+        screen: "SETUP",
+        states: [...state.states, cleanState(state)],
+      };
+    case Actions.UPDATE_COALITION_VALUES:
+      return {
+        ...state,
+        coalitionsValues: { ...action.payload.c },
+      };
+
     default:
       return {
         ...state,
@@ -131,4 +143,19 @@ const cleanState = (s: StateShape): StateShape => {
   const res = { ...s };
   res.states = [];
   return res;
+};
+
+const buildDefaultOffer = (s: StateShape): Offer => {
+  return {
+    P1: "NON_RELEVANT",
+    P2: "ACCEPTED",
+    P3: "ACCEPTED",
+    actor: Player.P1,
+    selectedCoalition: "23",
+    split: {
+      P1: 0,
+      P2: Math.floor(s.coalitionsValues["23"] / 2),
+      P3: Math.ceil(s.coalitionsValues["23"] / 2),
+    },
+  };
 };

@@ -85,6 +85,16 @@
   margin-top: 175px;
 }
 
+.value_button {
+  padding-left: 16px;
+  width: 50px;
+}
+
+.value_button:disabled {
+  background-color: rgba(239, 239, 239, 1);
+  color: black;
+}
+
 .par_row_of_players {
   margin-top: 25px;
   color: green;
@@ -207,9 +217,18 @@
 }
 
 .list_offers > li > span {
-  border-left: solid 1px black;
-  border-right: solid 1px black;
+  border: solid 1px black;
   display: inline-block;
   padding: 5px;
   width: 230px;
+}
+
+.game_btn {
+  min-width: 80px;
+  min-height: 50px;
+}
+
+.preset_btns {
+  display: flex;
+  justify-content: space-around;
 }

@@ -15,11 +15,31 @@ export enum Actions {
   SUBMIT_OFFER = "SUBMIT_OFFER",
   RESPOND_OFFER = "RESPOND_OFFER",
   UNDO = "UNDO",
+  SETUP = "SETUP",
+  UPDATE_COALITION_VALUES = "UPDATE_COALITION_VALUES",
   // ACCEPT_OFFER = "ACCEPT_OFFER",
   // REJECT_OFFER = "REJECT_OFFER",
   BACK = "BACK",
   GIVE_UP = "GIVE_UP",
 }
+
+export const updateCoalitions = (
+  c: GameCoalitionsValues
+): UpdateCoalitionsAction => {
+  return {
+    type: Actions.UPDATE_COALITION_VALUES,
+    payload: {
+      c,
+    },
+  };
+};
+
+export const setup = (): SetupAction => {
+  return {
+    type: Actions.SETUP,
+    payload: {},
+  };
+};
 
 export const giveUp = (): GiveUpAction => {
   return {
@@ -48,14 +68,10 @@ export const respondOffer = (
   };
 };
 
-export const startGame = (
-  gameValues: GameCoalitionsValues,
-  offer: Offer
-): StartGameAction => {
+export const startGame = (offer: Offer): StartGameAction => {
   return {
     type: Actions.START_GAME,
     payload: {
-      gameCoalitionsValues: gameValues,
       offer: offer,
     },
   };
@@ -95,7 +111,6 @@ export const submitOffer = (
 interface StartGameAction {
   type: Actions.START_GAME;
   payload: {
-    gameCoalitionsValues: GameCoalitionsValues;
     offer: Offer;
   };
 }
@@ -139,11 +154,23 @@ interface GiveUpAction {
   payload: {};
 }
 
+interface SetupAction {
+  type: Actions.SETUP;
+  payload: {};
+}
+
 interface RespondOfferAction {
   type: Actions.RESPOND_OFFER;
   payload: {
     actor: Player;
     status: respStatus;
+  };
+}
+
+interface UpdateCoalitionsAction {
+  type: Actions.UPDATE_COALITION_VALUES;
+  payload: {
+    c: GameCoalitionsValues;
   };
 }
 
@@ -155,4 +182,6 @@ export type GameAction =
   | SubmitOfferAction
   | RespondOfferAction
   | UndoAction
-  | GiveUpAction;
+  | GiveUpAction
+  | SetupAction
+  | UpdateCoalitionsAction;
