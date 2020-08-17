@@ -148,8 +148,8 @@ const cleanState = (s: StateShape): StateShape => {
 const buildDefaultOffer = (s: StateShape): Offer => {
   return {
     P1: "NON_RELEVANT",
-    P2: "ACCEPTED",
-    P3: "ACCEPTED",
+    P2: "NON_RELEVANT",
+    P3: "NON_RELEVANT",
     actor: Player.P1,
     selectedCoalition: "23",
     split: {
