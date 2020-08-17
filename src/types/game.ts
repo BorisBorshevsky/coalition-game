@@ -14,10 +14,10 @@ export interface GameCoalitionsValues {
 }
 
 export const defaultGameCoalitionsValues: GameCoalitionsValues = {
-  "12": 0,
-  "13": 0,
-  "23": 0,
-  "123": 0,
+  "12": 50,
+  "13": 60,
+  "23": 70,
+  "123": 100,
 };
 
 export type CoalitionId = keyof GameCoalitionsValues;

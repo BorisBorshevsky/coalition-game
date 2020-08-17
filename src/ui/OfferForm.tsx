@@ -59,15 +59,13 @@ export const OfferForm = (props: props) => {
 
   const offerAlreadyExists = () => {
     const found = offers.find((o: Offer) => {
-      if (
-        input.P1 == o.split.P1 &&
-        input.P2 == o.split.P2 &&
-        input.P3 == o.split.P3 &&
+      return (
+        input.P1 === o.split.P1 &&
+        input.P2 === o.split.P2 &&
+        input.P3 === o.split.P3 &&
         o[currentTurn] === "PROPOSED" &&
         o.selectedCoalition === coalitionForOffer
-      ) {
-        return true;
-      }
+      );
     });
 
     return !!found;

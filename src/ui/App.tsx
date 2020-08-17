@@ -16,7 +16,6 @@ export const App = (props: AppContainerProps) => {
     onGameStart,
     screen,
     onCoalitionSelect,
-    coalitionForOffer,
     onUndo,
     onSetupClick,
   } = props;

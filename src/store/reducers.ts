@@ -99,7 +99,7 @@ export const appReducer = (
         };
       }
 
-      throw "Should not happen";
+      throw new Error("Should not happen");
 
     case Actions.UNDO:
       if (state.states) {

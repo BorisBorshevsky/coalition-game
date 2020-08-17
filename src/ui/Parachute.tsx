@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren } from "react";
 import { CoalitionId, GameCoalitionsValues, Player } from "../types/game";
 
 interface ParachuteProps {
@@ -9,38 +9,40 @@ interface ParachuteProps {
 }
 
 export const Parachute = (props: ParachuteProps) => {
-  const { coalitionsValues, players, editable } = props;
+  const {
+    coalitionsValues,
+    players,
+    editable,
+    onUpdateCoalition = () => {},
+  } = props;
 
-  const [input, setInput] = useState<GameCoalitionsValues>({
-    ...coalitionsValues,
-  });
+  const newCoalValues = { ...coalitionsValues };
 
   const handleUpdateVal = (c: CoalitionId) => {
     return (value: number) => {
-      const newInput = { ...input, [c]: value };
-      setInput(newInput);
-      props.onUpdateCoalition && props.onUpdateCoalition(newInput);
+      const newInput = { ...coalitionsValues, [c]: value };
+      onUpdateCoalition(newInput);
     };
   };
-
+  console.log(newCoalValues);
   return (
     <div className={"par_root"}>
       <div className={"par_top"}>
         <ValueButton
           disabled={!editable}
-          value={coalitionsValues["13"]}
+          value={newCoalValues["13"]}
           onUpdate={handleUpdateVal("13")}
         />
       </div>
       <div className={"par_second"}>
         <ValueButton
           disabled={!editable}
-          value={coalitionsValues["12"]}
+          value={newCoalValues["12"]}
           onUpdate={handleUpdateVal("12")}
         />
         <ValueButton
           disabled={!editable}
-          value={coalitionsValues["23"]}
+          value={newCoalValues["23"]}
           onUpdate={handleUpdateVal("23")}
         />
       </div>
@@ -52,7 +54,7 @@ export const Parachute = (props: ParachuteProps) => {
       <div className={"par_bottom"}>
         <ValueButton
           disabled={!editable}
-          value={coalitionsValues["123"]}
+          value={newCoalValues["123"]}
           onUpdate={handleUpdateVal("123")}
         />
       </div>
@@ -72,7 +74,7 @@ const ValueButton = (props: valueButtonProps) => {
       type="number"
       disabled={!!props.disabled}
       className={"value_button"}
-      defaultValue={props.value}
+      value={props.value}
       onChange={(e) => {
         return props.onUpdate(parseInt(e.target.value));
       }}

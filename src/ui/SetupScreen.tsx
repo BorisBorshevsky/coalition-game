@@ -56,14 +56,17 @@ const presetGames: Array<GameCoalitionsValues> = [
 
 export const SetupScreen = (props: setupScreenProps) => {
   const handlePresetGame = (v: GameCoalitionsValues) => {
-    props.onUpdateCoalition && props.onUpdateCoalition(v);
-    props.onGameStart();
+    props.onUpdateCoalition(v);
   };
 
   return (
     <div className={"setup_root"}>
       <h2>You can edit the values of the coalitions:</h2>
-      <Parachute {...props} editable={true} />
+      <Parachute
+        {...props}
+        coalitionsValues={props.coalitionsValues}
+        editable={true}
+      />
       <h2>Or you can select one of the preset games:</h2>
       <div className={"preset_btns"}>
         {presetGames.map((value, idx) => {
