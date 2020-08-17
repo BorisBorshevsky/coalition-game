@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/coalition-game/static/css/main.954ae1d7.chunk.css",
-    "main.js": "/coalition-game/static/js/main.35bbf257.chunk.js",
-    "main.js.map": "/coalition-game/static/js/main.35bbf257.chunk.js.map",
+    "main.js": "/coalition-game/static/js/main.2e056ed6.chunk.js",
+    "main.js.map": "/coalition-game/static/js/main.2e056ed6.chunk.js.map",
     "runtime-main.js": "/coalition-game/static/js/runtime-main.abd01dd6.js",
     "runtime-main.js.map": "/coalition-game/static/js/runtime-main.abd01dd6.js.map",
     "static/js/2.896b00c3.chunk.js": "/coalition-game/static/js/2.896b00c3.chunk.js",
     "static/js/2.896b00c3.chunk.js.map": "/coalition-game/static/js/2.896b00c3.chunk.js.map",
     "index.html": "/coalition-game/index.html",
-    "precache-manifest.2a79f2bcb402495ea002f5ef6a086be3.js": "/coalition-game/precache-manifest.2a79f2bcb402495ea002f5ef6a086be3.js",
+    "precache-manifest.788a406e7f7bf9bd490ae533be6e15d0.js": "/coalition-game/precache-manifest.788a406e7f7bf9bd490ae533be6e15d0.js",
     "service-worker.js": "/coalition-game/service-worker.js",
     "static/css/main.954ae1d7.chunk.css.map": "/coalition-game/static/css/main.954ae1d7.chunk.css.map",
     "static/js/2.896b00c3.chunk.js.LICENSE.txt": "/coalition-game/static/js/2.896b00c3.chunk.js.LICENSE.txt",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.abd01dd6.js",
     "static/js/2.896b00c3.chunk.js",
     "static/css/main.954ae1d7.chunk.css",
-    "static/js/main.35bbf257.chunk.js"
+    "static/js/main.2e056ed6.chunk.js"
   ]
 }
