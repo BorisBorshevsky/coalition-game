@@ -57,6 +57,7 @@
   background-image: url("parachute.jpeg");
   background-size: cover;
   margin: auto;
+  height: 437px;
 }
 
 .par_root > div > * {
@@ -65,6 +66,7 @@
   text-align: center;
   border-radius: 10px;
   height: 50px;
+  z-index: 100;
 }
 
 .par_top {
@@ -231,4 +233,83 @@
 .preset_btns {
   display: flex;
   justify-content: space-around;
+}
+
+.par_top_line {
+  position: absolute;
+  margin-left: 10px;
+  margin-right: auto;
+  margin-top: 26px;
+  width: 452px;
+  height: 198px;
+  border-top: 3px black solid;
+  border-left: 3px black solid;
+  border-right: 3px black solid;
+  border-radius: 441px;
+  z-index: 11;
+}
+
+.par_left_line {
+  position: absolute;
+  margin-left: 38px;
+  margin-right: auto;
+  margin-top: 100px;
+  width: 196px;
+  height: 81px;
+  border-top: 3px black solid;
+  border-left: 3px black solid;
+  border-right: 3px black solid;
+  border-radius: 441px;
+  z-index: 11;
+}
+
+
+.par_right_line {
+  position: absolute;
+  margin-left: 247px;
+  margin-right: auto;
+  margin-top: 100px;
+  width: 196px;
+  height: 81px;
+  border-top: 3px black solid;
+  border-left: 3px black solid;
+  border-right: 3px black solid;
+  border-radius: 441px;
+  z-index: 11;
+}
+
+
+.par_bottom_right_line {
+  position: absolute;
+  margin-left: 175px;
+  margin-right: auto;
+  margin-top: 226px;
+  width: 300px;
+  height: 81px;
+  border-top: 3px black solid;
+  z-index: 11;
+  transform: rotate(132deg);
+}
+
+.par_bottom_middle_line {
+  position: absolute;
+  margin-left: 242px;
+  margin-right: auto;
+  margin-top: 205px;
+  width: 195px;
+  height: 199px;
+  border-left: 3px black solid;
+  z-index: 11;
+}
+
+.par_bottom_left_line {
+  position: absolute;
+  margin-left: -50px;
+  margin-right: auto;
+  margin-top: 278px;
+  width: 300px;
+  height: 81px;
+  border-top: 3px black solid;
+  z-index: 11;
+  transform: rotate(48deg);
 }

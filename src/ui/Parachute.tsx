@@ -1,5 +1,5 @@
-import React, { PropsWithChildren } from "react";
-import { CoalitionId, GameCoalitionsValues, Player } from "../types/game";
+import React, {PropsWithChildren} from "react";
+import {CoalitionId, GameCoalitionsValues, Player} from "../types/game";
 
 interface ParachuteProps {
   coalitionsValues: GameCoalitionsValues;
@@ -13,20 +13,27 @@ export const Parachute = (props: ParachuteProps) => {
     coalitionsValues,
     players,
     editable,
-    onUpdateCoalition = () => {},
+    onUpdateCoalition = () => {
+    },
   } = props;
 
-  const newCoalValues = { ...coalitionsValues };
+  const newCoalValues = {...coalitionsValues};
 
   const handleUpdateVal = (c: CoalitionId) => {
     return (value: number) => {
-      const newInput = { ...coalitionsValues, [c]: value };
+      const newInput = {...coalitionsValues, [c]: value};
       onUpdateCoalition(newInput);
     };
   };
   console.log(newCoalValues);
   return (
     <div className={"par_root"}>
+      <div className={"par_top_line"} />
+      <div className={"par_left_line"} />
+      <div className={"par_right_line"} />
+      <div className={"par_bottom_right_line"} />
+      <div className={"par_bottom_middle_line"} />
+      <div className={"par_bottom_left_line"} />
       <div className={"par_top"}>
         <ValueButton
           disabled={!editable}

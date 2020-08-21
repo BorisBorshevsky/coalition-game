@@ -26,7 +26,7 @@ export const TopBar = (props: topBarProps) => {
           </button>
         )}
 
-        {(props.screen === "INTRO" || props.screen === "SETUP") && (
+        {(props.screen === "SETUP") && (
           <button className={"root_topbar_button"} onClick={props.onStartGame}>
             Start Game
           </button>
